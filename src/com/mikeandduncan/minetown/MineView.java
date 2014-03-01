@@ -9,41 +9,73 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class MineView extends View {
+	
+	/**
+	 * A reference to the player
+	 */
+	private Player player = null;
+	
+	/**
+	 * 2D array to hold all the block tiles
+	 */
+	private Block[][] blocks;
+	
+	/**
+	 * A reference to above ground
+	 */
+	private Land land = null;
+	
+	/**
+	 * The dimensions of our game
+	 */
+	private int bWidth = 10;
+	private int bHeight = 10;
+	
+	/**
+	 * The block bitmap that the player digs
+	 */
+	private Bitmap blockMap;
+	
+	/**
+	 * The block bitmap that the player has dug
+	 */
+	private Bitmap badMap;
+	
+	/**
+	 * Wut
+	 */
+	private Bitmap empty;
 
 	public MineView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 		init(context);
 	}
 
 	public MineView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-
 		init(context);
 	}
 
 	public MineView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		// TODO Auto-generated constructor stub
 		init(context);
 	}
 	
-	Player player = null;
-	Block[][] blocks;
-	Land land = null;
-	int bWidth = 10;
-	int bHeight = 10;
-	Bitmap blockMap;
-	Bitmap badMap;
-	Bitmap empty;
-	
+	/**
+	 * Initialize the mine view
+	 * @param context
+	 */
 	public void init(Context context){
+		// Create our array to hold the blocks
 		blocks = new Block[bWidth][bHeight];
 
+		// Load bitmaps
 		blockMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.block);
 		badMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.block_bad);
 		empty = Bitmap.createBitmap(blockMap.getHeight(), blockMap.getWidth(), Bitmap.Config.ARGB_8888);
 		land = new Land(context);
+		
+		// Build our world!
 		for(int i =0; i<bWidth; i++)
 		{
 			for(int j = 0; j<bHeight; j++)
@@ -54,17 +86,25 @@ public class MineView extends View {
 					blocks[i][j] = new Block(context, empty);
 			}
 		}
+		
+		// Create the player
 		player = new Player(context);
 		
 	}
 
+	/**
+	 * Draw the world
+	 * @param canvas
+	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
-		// TODO Auto-generated method stub
 		super.onDraw(canvas);
 
+		// Draw the land
+		// TODO: FIX MEH
 		land.draw(canvas, -(player.getX()+1)*blockMap.getWidth(), -player.getY()*blockMap.getHeight());
 		
+		// Draw the underground world
 		for(int i = 0; i<bWidth; i++)
 		{
 			for(int j = 0; j<bHeight; j++)
@@ -73,6 +113,7 @@ public class MineView extends View {
 			}
 		}
 		
+		// Draw the player
 		player.draw(canvas);
 		
 		
@@ -80,10 +121,12 @@ public class MineView extends View {
 		
 	}
 
+	/**
+	 * Handle a touch event
+	 * @param event
+	 */
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub
-		
+	public boolean onTouchEvent(MotionEvent event) {		
         switch(event.getActionMasked()) {
         case MotionEvent.ACTION_DOWN:
         	move(event);
@@ -92,8 +135,11 @@ public class MineView extends View {
 		return super.onTouchEvent(event);
 	}
 
+	/**
+	 * Move stuff
+	 * @param event
+	 */
 	private void move(MotionEvent event) {
-		// TODO Auto-generated method stub
 		float x = event.getX()/this.getWidth();
 		float y = event.getY()/this.getHeight();
 		
@@ -139,8 +185,10 @@ public class MineView extends View {
 		invalidate();
 	}
 
+	/**
+	 * IDK
+	 */
 	private void eraseBlock() {
-		// TODO Auto-generated method stub
 		
 		//THIS IS BACKWARDS, BUT WORKS. NEEDS TO BE FIXED SOMEHOW
 		//Y  up = +1 y Down = -1, I think that's backwards

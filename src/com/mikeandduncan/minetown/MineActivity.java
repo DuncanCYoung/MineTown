@@ -6,6 +6,9 @@ import android.view.Menu;
 
 public class MineActivity extends Activity {
 	
+	/**
+	 * Mine view
+	 */
 	MineView mineView = null;
 
 	@Override

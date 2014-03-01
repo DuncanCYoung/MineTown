@@ -6,23 +6,36 @@ import android.graphics.Canvas;
 
 public class Block {
 
-	Bitmap bitmap = null;
-	public Block(Context context, Bitmap bmap) {
-		// TODO Auto-generated constructor stub
-		bitmap = bmap;
-	}
+	/**
+	 * Our block bitmap
+	 */
+	private Bitmap blockBitmap = null;
+	
 	public Bitmap getBitmap() {
-		return bitmap;
+		return blockBitmap;
 	}
+	
 	public void setBitmap(Bitmap bitmap) {
-		this.bitmap = bitmap;
+		this.blockBitmap = bitmap;
 	}
+	
+	public Block(Context context, Bitmap bmap) {
+		blockBitmap = bmap;
+	}
+	
+	/**
+	 * Draw the block
+	 * @param canvas
+	 * @param x X location
+	 * @param y Y location
+	 * @param ox offset x?
+	 * @param oy offset y?
+	 */
 	public void draw(Canvas canvas, int x, int y, int ox, int oy) {
-		// TODO Auto-generated method stub
 		canvas.save();
 		canvas.scale(.1f, .1f);
-		canvas.translate((x-ox+4)*bitmap.getWidth(), (y-oy+6)*bitmap.getHeight());
-		canvas.drawBitmap(bitmap, 0, 0, null);
+		canvas.translate((x-ox+4)*blockBitmap.getWidth(), (y-oy+6)*blockBitmap.getHeight());
+		canvas.drawBitmap(blockBitmap, 0, 0, null);
 		canvas.restore();
 	}
 

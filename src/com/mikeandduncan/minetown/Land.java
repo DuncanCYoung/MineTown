@@ -7,13 +7,21 @@ import android.graphics.Canvas;
 
 public class Land {
 
+	/**
+	 * Land bitmap
+	 */
 	private Bitmap bmap;
+	
 	public Land(Context context) {
-		// TODO Auto-generated constructor stub
-
 		bmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.land);
 	}
 
+	/**
+	 * Draw the land
+	 * @param canvas
+	 * @param x
+	 * @param y
+	 */
 	public void draw(Canvas canvas, int x, int y)
 	{
 		canvas.save();
