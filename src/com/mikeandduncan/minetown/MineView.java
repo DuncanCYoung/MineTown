@@ -186,7 +186,9 @@ public class MineView extends View {
 	}
 
 	/**
-	 * IDK
+	 * This function gets called everytime the player moves, and then whatever position they move to gets changed to
+	 * the respective new bitmap. right now it changes it to "badmap" but can be expaned to draw an already diggen(dug?)
+	 * space.
 	 */
 	private void eraseBlock() {
 		
